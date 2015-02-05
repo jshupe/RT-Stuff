@@ -29,8 +29,8 @@ use RT -init;
 use RT::Handle;
 use MIME::Lite;
 
-my $TO = 'support@esc13.net';
-my $FROM = 'auto@esc13.net';
+my $TO = 'support@domain.tld';
+my $FROM = 'auto@domain.tld';
 my $SUBJECT_PASS = "All expected emails found - " . localtime();
 my $SUBJECT_FAIL = "MISSING EMAILS - " . localtime();
 
