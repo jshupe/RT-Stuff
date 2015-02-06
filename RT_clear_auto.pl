@@ -32,7 +32,7 @@ my $queue = "3"; # SELECT id FROM Queues WHERE Name='auto';
 
 my @SUBJECT;
 my $WORK0 = $RT::Handle->dbh;
-my $QUERY = "UPDATE Tickets Set Status='deleted' WHERE Created > DATE_SUB(NOW(), INTERVAL 72 HOUR) AND Queue = '3'";
+my $QUERY = "UPDATE Tickets Set Status='deleted' WHERE Created < DATE_SUB(NOW(), INTERVAL 72 HOUR) AND Queue = '3'";
 my $WORK1 = $WORK0->prepare($QUERY);
 $WORK1->execute();
 $RT::Handle->Disconnect();
