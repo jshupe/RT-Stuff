@@ -35,7 +35,7 @@ my $SUBJECT_PASS = "All expected emails found - " . localtime();
 my $SUBJECT_FAIL = "MISSING EMAILS - " . localtime();
 
 # Read in expected subjects, one per line, from .cfg file
-my $CFG="RT_missing_auto.cfg";
+my $CFG="/path/to/RT_missing_auto.cfg";
 open (CFG, "<$CFG");
 my @EXPECTED_SUBS = <CFG>;
 close CFG;
@@ -44,7 +44,7 @@ close CFG;
 my @SUBJECT;
 my $LIST1 = $RT::Handle->dbh;
 my $QUERY = "SELECT Subject from Tickets where Created > DATE_SUB(NOW(),
-INTERVAL 24 HOUR)";
+    INTERVAL 24 HOUR) AND Queue='3'";
 my $LIST2 = $LIST1->prepare($QUERY);
 $LIST2->execute();
 while (my @SUB1 = $LIST2->fetchrow_array) {
@@ -75,7 +75,11 @@ if (length $OUTPUT_BODY_MID > 1) {
     );
     $MSG->send;
 } else {
-    $BODY = "All expected emails found.";
+    $BODY = "All expected emails found.\n\nFound the following subjects:\n\n";
+
+    foreach my $SUBJECT (@SUBJECT) {
+        $BODY .= "$SUBJECT\n";
+    }
 
     my $MSG = MIME::Lite->new(
         From    => $FROM,
