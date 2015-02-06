@@ -83,4 +83,5 @@ if (length $OUTPUT_BODY_MID > 1) {
         Subject => $SUBJECT_PASS,
         Data    => $BODY
     );
+    $MSG->send;
 }
